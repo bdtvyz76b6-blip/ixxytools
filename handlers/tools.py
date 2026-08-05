@@ -5,6 +5,7 @@ from aiogram.fsm.context import FSMContext
 import random
 import string
 import qrcode
+import requests
 
 from states import ToolsState
 
