@@ -113,6 +113,52 @@ async def qr_create(
 # 🔤 Красивый шрифт
 # =========================
 
+
+def bold_text(text):
+
+    normal = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+
+    fancy = "𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳"
+
+    return text.translate(
+        str.maketrans(
+            normal,
+            fancy
+        )
+    )
+
+
+
+def italic_text(text):
+
+    normal = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+
+    fancy = "𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻"
+
+    return text.translate(
+        str.maketrans(
+            normal,
+            fancy
+        )
+    )
+
+
+
+def circle_text(text):
+
+    normal = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+
+    fancy = "ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ"
+
+    return text.translate(
+        str.maketrans(
+            normal,
+            fancy
+        )
+    )
+
+
+
 @router.message(lambda m: m.text == "🔤 Текст")
 async def text_start(
     message: Message,
@@ -124,7 +170,12 @@ async def text_start(
     )
 
     await message.answer(
-        "🔤 Отправь текст для красивого шрифта"
+        """
+🔤 Генератор шрифтов
+
+Отправь любой текст,
+я сделаю красивые варианты ✨
+"""
     )
 
 
@@ -138,43 +189,33 @@ async def text_create(
     text = message.text
 
 
-    normal = text
-
-
-    bold = text.translate(
-        str.maketrans(
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-            "𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳"
-        )
-    )
-
-
-    italic = text.translate(
-        str.maketrans(
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-            "𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻"
-        )
-    )
-
-
     await message.answer(
         f"""
-✨ Шрифты:
+✨ Готово:
 
-1️⃣
-{bold}
+1️⃣ Жирный
 
-2️⃣
-{italic}
+{bold_text(text)}
 
-3️⃣
-ⓘⓧⓧⓨ
 
-4️⃣
-『 {normal} 』
+2️⃣ Курсив
 
-5️⃣
-꧁ {normal} ꧂
+{italic_text(text)}
+
+
+3️⃣ Кружочки
+
+{circle_text(text)}
+
+
+4️⃣ Стиль
+
+『 {text} 』
+
+
+5️⃣ Дизайн
+
+꧁༺ {text} ༻꧂
 """
     )
 
