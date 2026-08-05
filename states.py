@@ -8,3 +8,5 @@ class ToolsState(StatesGroup):
     link = State()
 
     text = State()
+
+    summary = State()
