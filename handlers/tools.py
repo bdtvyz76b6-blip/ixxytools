@@ -240,7 +240,12 @@ async def link_start(
     )
 
     await message.answer(
-        "🔗 Отправь длинную ссылку, я её сокращу ⚡"
+        """
+🔗 Сокращение ссылок
+
+Отправь длинную ссылку,
+я сделаю её короче ⚡
+"""
     )
 
 
@@ -252,15 +257,16 @@ async def link_create(
 ):
 
     import requests
+    import urllib.parse
 
 
-    url = message.text
+    url = message.text.strip()
 
 
     if not url.startswith("http"):
 
         await message.answer(
-            "❌ Это не похоже на ссылку"
+            "❌ Отправь ссылку начиная с http:// или https://"
         )
 
         return
@@ -268,34 +274,54 @@ async def link_create(
 
     try:
 
-        result = requests.get(
-            "https://is.gd/create.php",
-            params={
-                "format": "simple",
-                "url": url
-            },
+        encoded_url = urllib.parse.quote(
+            url,
+            safe=""
+        )
+
+
+        response = requests.get(
+            f"https://is.gd/create.php?format=simple&url={encoded_url}",
             timeout=10
         )
 
 
-        short_url = result.text
+        short_url = response.text.strip()
 
 
-        await message.answer(
-            f"""
+        if short_url.startswith("Error"):
+
+            await message.answer(
+                f"""
+❌ Не удалось сократить ссылку
+
+Причина:
+{short_url}
+"""
+            )
+
+
+        else:
+
+            await message.answer(
+                f"""
 ✅ Ссылка сокращена!
 
 🔗 Новая ссылка:
 
 {short_url}
 """
-        )
+            )
 
 
     except Exception as e:
 
         await message.answer(
-            "❌ Ошибка сокращения ссылки"
+            f"""
+❌ Ошибка сокращения ссылки
+
+{e}
+"""
         )
 
 
