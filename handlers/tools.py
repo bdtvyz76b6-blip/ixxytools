@@ -238,9 +238,8 @@ async def link_start(
         ToolsState.link
     )
 
-
     await message.answer(
-        "🔗 Отправь ссылку"
+        "🔗 Отправь длинную ссылку, я её сокращу ⚡"
     )
 
 
@@ -251,15 +250,52 @@ async def link_create(
     state: FSMContext
 ):
 
-    await message.answer(
-        f"""
-🔗 Ссылка получена:
+    import requests
 
-{message.text}
 
-Сокращение добавим следующим обновлением 🚀
+    url = message.text
+
+
+    if not url.startswith("http"):
+
+        await message.answer(
+            "❌ Это не похоже на ссылку"
+        )
+
+        return
+
+
+    try:
+
+        result = requests.get(
+            "https://is.gd/create.php",
+            params={
+                "format": "simple",
+                "url": url
+            },
+            timeout=10
+        )
+
+
+        short_url = result.text
+
+
+        await message.answer(
+            f"""
+✅ Ссылка сокращена!
+
+🔗 Новая ссылка:
+
+{short_url}
 """
-    )
+        )
+
+
+    except Exception as e:
+
+        await message.answer(
+            "❌ Ошибка сокращения ссылки"
+        )
 
 
     await state.clear()
