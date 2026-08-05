@@ -416,3 +416,107 @@ async def summary_make(
 
 
     await state.clear()
+    
+    
+    
+    # =========================
+# 🎲 Генератор идей
+# =========================
+
+@router.message(lambda m: m.text == "🎲 Идея")
+async def idea_create(
+    message: Message
+):
+
+    ideas = [
+        "🚀 Telegram-бот для автоматизации бизнеса",
+        "📱 Приложение для изучения языков",
+        "🤖 AI-помощник для школьников",
+        "🎮 Новая мобильная игра",
+        "🛒 Онлайн-магазин с умными рекомендациями",
+        "📸 Сервис создания красивых аватарок",
+        "🔐 Менеджер паролей",
+        "💡 Генератор идей для проектов"
+    ]
+
+
+    import random
+
+
+    await message.answer(
+        f"""
+🎲 Твоя идея:
+
+{random.choice(ideas)}
+
+✨ ixxy Tools
+"""
+    )
+
+
+
+# =========================
+# 👤 Генератор никнеймов
+# =========================
+
+@router.message(lambda m: m.text == "👤 Никнейм")
+async def nickname_start(
+    message: Message,
+    state: FSMContext
+):
+
+    await state.set_state(
+        ToolsState.nickname
+    )
+
+
+    await message.answer(
+        """
+👤 Генератор никнеймов
+
+Отправь своё имя или слово,
+я сделаю красивые варианты 🔥
+"""
+    )
+
+
+
+@router.message(ToolsState.nickname)
+async def nickname_create(
+    message: Message,
+    state: FSMContext
+):
+
+    import random
+
+
+    word = message.text
+
+
+    nicknames = [
+        f"{word}X",
+        f"{word}_Pro",
+        f"x{word}",
+        f"{word}Wave",
+        f"亗{word}亗",
+        f"『{word}』",
+        f"⚡{word}",
+        f"{word}🔥"
+    ]
+
+
+    await message.answer(
+        f"""
+👤 Никнеймы:
+
+1. {random.choice(nicknames)}
+2. {random.choice(nicknames)}
+3. {random.choice(nicknames)}
+4. {random.choice(nicknames)}
+
+🔥 ixxy Tools
+"""
+    )
+
+
+    await state.clear()
