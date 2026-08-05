@@ -207,3 +207,78 @@ async def number(
     await message.answer(
         f"🎲 Случайное число: {random.randint(1,100)}"
     )
+    
+    
+
+# =========================
+# 🧠 Краткий пересказ
+# =========================
+
+@router.message(lambda m: m.text == "🧠 Пересказ")
+async def summary_start(
+    message: Message,
+    state: FSMContext
+):
+
+    await state.set_state(
+        ToolsState.summary
+    )
+
+    await message.answer(
+        """
+🧠 Краткий пересказ
+
+Отправь длинный текст,
+а я выделю главную мысль.
+"""
+    )
+
+
+@router.message(ToolsState.summary)
+async def summary_make(
+    message: Message,
+    state: FSMContext
+):
+
+    text = message.text
+
+
+    # разбиваем на предложения
+    sentences = text.split(".")
+
+
+    sentences = [
+        s.strip()
+        for s in sentences
+        if len(s.strip()) > 20
+    ]
+
+
+    if len(sentences) == 0:
+
+        await message.answer(
+            "❌ Текст слишком короткий"
+        )
+
+        await state.clear()
+        return
+
+
+    # берём первые важные предложения
+    result = ". ".join(
+        sentences[:3]
+    )
+
+
+    await message.answer(
+        f"""
+🧠 Главная мысль:
+
+{result}
+
+📌 Кратко: выделено {len(sentences)} предложений.
+"""
+    )
+
+
+    await state.clear()
