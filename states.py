@@ -10,3 +10,5 @@ class ToolsState(StatesGroup):
     text = State()
 
     summary = State()
+    
+    nickname = State()
