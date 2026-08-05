@@ -13,12 +13,13 @@ def main_menu():
             ],
 
             [
-                KeyboardButton(text="🔗 Ссылка"),
-                KeyboardButton(text="🔤 Текст")
+                KeyboardButton(text="🔤 Текст"),
+                KeyboardButton(text="🧠 Пересказ")
             ],
 
             [
-                KeyboardButton(text="🧠 Пересказ")
+                KeyboardButton(text="🎲 Идея"),
+                KeyboardButton(text="👤 Никнейм")
             ],
 
             [
