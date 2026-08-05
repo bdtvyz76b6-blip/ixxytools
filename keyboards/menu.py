@@ -1,7 +1,4 @@
-from aiogram.types import (
-    ReplyKeyboardMarkup,
-    KeyboardButton
-)
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 
 def main_menu():
@@ -11,27 +8,21 @@ def main_menu():
         keyboard=[
 
             [
-                KeyboardButton(
-                    text="🔐 Пароль"
-                ),
-                KeyboardButton(
-                    text="🔳 QR"
-                )
+                KeyboardButton(text="🔐 Пароль"),
+                KeyboardButton(text="🔳 QR")
             ],
 
             [
-                KeyboardButton(
-                    text="🔗 Ссылка"
-                ),
-                KeyboardButton(
-                    text="🔤 Текст"
-                )
+                KeyboardButton(text="🔗 Ссылка"),
+                KeyboardButton(text="🔤 Текст")
             ],
 
             [
-                KeyboardButton(
-                    text="👤 Профиль"
-                )
+                KeyboardButton(text="🧠 Пересказ")
+            ],
+
+            [
+                KeyboardButton(text="👤 Профиль")
             ]
 
         ],
